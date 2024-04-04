@@ -21,6 +21,7 @@ navigationCompose = "2.7.7"
 kotlin = "1.9.23"
 retrofit = "2.9.0"
 room = "2.6.1"
+kotlinCompiler = "1.5.11"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

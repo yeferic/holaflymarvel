@@ -98,6 +98,7 @@ gen-external-apklibs
 *.ipr
 *~
 *.swp
+/build
 
 # Android Patch
 
