@@ -1,4 +1,4 @@
-package com.yeferic.holaflymarvel.ui.theme
+package com.yeferic.holaflymarvel.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
