@@ -19,7 +19,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
 fun LottieAnimationWidget(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     @RawRes id: Int,
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(id))
