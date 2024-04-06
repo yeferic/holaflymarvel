@@ -3,4 +3,8 @@
 
     <!-- Home Screen -->
     <string name="home.screen.button_text">Iniciemos</string>
+
+    <!-- Menu Screen -->
+    <string name="menu.screen.retry_button">Intentar nuevamente</string>
+    <string name="menu.screen.image_description">Imagen</string>
 </resources>
