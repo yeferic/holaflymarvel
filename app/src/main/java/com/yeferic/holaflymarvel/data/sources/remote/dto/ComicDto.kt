@@ -7,7 +7,7 @@ data class ComicDto(
     @SerializedName("id")
     var id: Long,
     @SerializedName("thumbnail")
-    var thumbnail: ThumbnailComic,
+    var thumbnail: ThumbnailDto,
 )
 
 fun ComicDto.mapToDomain(): Comic {
@@ -16,10 +16,3 @@ fun ComicDto.mapToDomain(): Comic {
         imageUrl = "${thumbnail.path}.${thumbnail.extension}",
     )
 }
-
-data class ThumbnailComic(
-    @SerializedName("path")
-    var path: String,
-    @SerializedName("extension")
-    var extension: String,
-)

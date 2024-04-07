@@ -16,10 +16,15 @@ import com.yeferic.holaflymarvel.presentation.comiclist.ui.screens.ComicsListScr
 import com.yeferic.holaflymarvel.presentation.comiclist.ui.screens.ComicsListScreenSuccessStateParams
 import com.yeferic.holaflymarvel.presentation.comiclist.viewmodel.ComicsViewModel
 
+data class ComicsListScreenParameters(
+    val idCharacter: Long,
+    val goToDetailScreen: (Long) -> Unit,
+)
+
 @Composable
 fun ComicsListScreen(
     viewModel: ComicsViewModel = hiltViewModel(),
-    idCharacter: Long,
+    params: ComicsListScreenParameters,
 ) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
 
@@ -52,14 +57,14 @@ fun ComicsListScreen(
                     comics = (status as ComicsListUiState.Success).comics,
                     isLoadingMore = (status as ComicsListUiState.Success).loadingMore,
                     loadingMoreFunction = { viewModel.getComics(true) },
-                    goToComicDetailScreen = { println(it) },
+                    goToComicDetailScreen = { params.goToDetailScreen(it) },
                 )
             ComicsListScreenSuccessState(params = successParams)
         }
     }
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.setIdCharacter(idCharacter)
+        viewModel.setIdCharacter(params.idCharacter)
         viewModel.getComics()
     }
 }

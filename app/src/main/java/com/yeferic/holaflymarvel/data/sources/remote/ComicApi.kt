@@ -13,4 +13,9 @@ interface ComicApi {
         @Query("offset") offset: Int,
         @Query("limit") limit: Int,
     ): Response<BaseResponseDto>
+
+    @GET("v1/public/comics/{comicId}")
+    suspend fun getComicDetail(
+        @Path("comicId") id: Long,
+    ): Response<BaseResponseDto>
 }
