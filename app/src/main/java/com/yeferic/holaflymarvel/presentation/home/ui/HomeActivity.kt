@@ -3,49 +3,76 @@ package com.yeferic.holaflymarvel.presentation.home.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.yeferic.holaflymarvel.core.commons.Routes.HOME_SCREEN
-import com.yeferic.holaflymarvel.core.commons.Routes.MENU_SCREEN
+import androidx.navigation.navArgument
+import com.yeferic.holaflymarvel.core.commons.Routes
+import com.yeferic.holaflymarvel.core.commons.Routes.Companion.COMIC_SCREEN_PARAMETER
 import com.yeferic.holaflymarvel.core.ui.theme.HolaflyMarvelTheme
+import com.yeferic.holaflymarvel.presentation.comiclist.ui.ComicsListScreen
 import com.yeferic.holaflymarvel.presentation.home.ui.screens.HomeScreen
 import com.yeferic.holaflymarvel.presentation.home.ui.screens.HomeScreenParams
 import com.yeferic.holaflymarvel.presentation.menu.ui.MenuScreen
-import com.yeferic.holaflymarvel.presentation.menu.ui.MenuScreenParams
-import com.yeferic.holaflymarvel.presentation.menu.viewmodel.MenuViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
-    private val menuViewModel: MenuViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             HolaflyMarvelTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .background(Color.White),
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     val navigationController = rememberNavController()
                     NavHost(
                         navController = navigationController,
-                        startDestination = HOME_SCREEN,
+                        startDestination = Routes.HomeScreen.route,
                     ) {
-                        composable(HOME_SCREEN) {
+                        composable(Routes.HomeScreen.route) {
                             HomeScreen(
-                                HomeScreenParams { navigationController.navigate(MENU_SCREEN) },
+                                HomeScreenParams {
+                                    navigationController.navigate(
+                                        Routes.MenuScreen.route,
+                                    )
+                                },
                             )
                         }
 
-                        composable(MENU_SCREEN) {
-                            MenuScreen(MenuScreenParams(menuViewModel))
+                        composable(Routes.MenuScreen.route) {
+                            MenuScreen {
+                                navigationController.navigate(
+                                    Routes.ComicsScreen.getRouteParameter(it),
+                                )
+                            }
+                        }
+
+                        composable(
+                            Routes.ComicsScreen.route,
+                            arguments =
+                                listOf(
+                                    navArgument(
+                                        COMIC_SCREEN_PARAMETER,
+                                    ) {
+                                        type = NavType.LongType
+                                    },
+                                ),
+                        ) {
+                            val idCharacter =
+                                it.arguments?.getLong(COMIC_SCREEN_PARAMETER) ?: 0
+                            ComicsListScreen(idCharacter = idCharacter)
                         }
                     }
                 }

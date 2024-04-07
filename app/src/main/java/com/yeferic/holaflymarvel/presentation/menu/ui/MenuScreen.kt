@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.yeferic.holaflymarvel.presentation.menu.states.MenuUiStates
@@ -14,13 +15,12 @@ import com.yeferic.holaflymarvel.presentation.menu.ui.screens.MenuScreenErrorSta
 import com.yeferic.holaflymarvel.presentation.menu.ui.screens.MenuScreenLoadingState
 import com.yeferic.holaflymarvel.presentation.menu.viewmodel.MenuViewModel
 
-data class MenuScreenParams(
-    val viewModel: MenuViewModel,
-)
-
 @Composable
-fun MenuScreen(params: MenuScreenParams) {
-    with(params.viewModel) {
+fun MenuScreen(
+    viewModel: MenuViewModel = hiltViewModel(),
+    navigateToComicsScreen: (Long) -> Unit,
+) {
+    with(viewModel) {
         val lifecycle = LocalLifecycleOwner.current.lifecycle
 
         val status by produceState<MenuUiStates>(
@@ -38,7 +38,7 @@ fun MenuScreen(params: MenuScreenParams) {
                 val dataParams =
                     MenuScreenDataLoadedParams(
                         characters = (status as MenuUiStates.DataLoaded).characters,
-                    ) { println(it) }
+                    ) { navigateToComicsScreen(it) }
                 MenuScreenDataLoadedState(dataParams)
             }
             is MenuUiStates.Error -> {

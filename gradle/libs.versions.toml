@@ -22,6 +22,7 @@ kotlin = "1.9.23"
 retrofit = "2.9.0"
 room = "2.6.1"
 kotlinCompiler = "1.5.11"
+hiltCompose = "1.2.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,6 +50,7 @@ gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref 
 #Dagger hilt
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "daggerHilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "daggerHilt" }
+hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltCompose" }
 
 #Room
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }

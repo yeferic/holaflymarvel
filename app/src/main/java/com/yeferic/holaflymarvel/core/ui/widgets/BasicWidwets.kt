@@ -3,7 +3,7 @@ package com.yeferic.holaflymarvel.core.ui.widgets
 import androidx.annotation.RawRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -46,7 +46,7 @@ fun AnimatedVisibilityWidget(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun LazyListState.OnBottomScroll(loadMore: () -> Unit) {
+fun LazyStaggeredGridState.OnBottomScroll(loadMore: () -> Unit) {
     val shouldLoadMore =
         remember {
             derivedStateOf {
@@ -55,10 +55,13 @@ fun LazyListState.OnBottomScroll(loadMore: () -> Unit) {
                 lastVisibleItem.index == layoutInfo.totalItemsCount - 1
             }
         }
+
     LaunchedEffect(shouldLoadMore) {
         snapshotFlow { shouldLoadMore.value }
             .collect {
-                if (it) loadMore()
+                if (it && firstVisibleItemScrollOffset > 0) {
+                    loadMore()
+                }
             }
     }
 }

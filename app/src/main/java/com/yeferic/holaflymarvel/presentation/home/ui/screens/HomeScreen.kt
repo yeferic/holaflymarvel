@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yeferic.holaflymarvel.R
 import com.yeferic.holaflymarvel.core.ui.widgets.LottieAnimationWidget
@@ -28,7 +27,9 @@ fun HomeScreen(params: HomeScreenParams) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            LottieAnimationWidget(modifier = Modifier.size(128.dp), id = R.raw.home_icon)
+            Box {
+                LottieAnimationWidget(modifier = Modifier.size(128.dp), id = R.raw.home_icon)
+            }
             Button(onClick = { params.navigateToMenuScreen.invoke() }) {
                 Text(
                     text = stringResource(id = R.string.home_screen_button_text),
@@ -36,10 +37,4 @@ fun HomeScreen(params: HomeScreenParams) {
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen(HomeScreenParams { })
 }
