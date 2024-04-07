@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.gson)
     implementation(libs.hilt)
+    implementation(libs.hilt.compose)
     implementation(libs.appcompat)
     implementation(libs.material)
     ksp(libs.hilt.compiler)

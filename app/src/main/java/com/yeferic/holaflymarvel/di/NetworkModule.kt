@@ -3,6 +3,7 @@ package com.yeferic.holaflymarvel.di
 import com.google.gson.Gson
 import com.yeferic.holaflymarvel.core.commons.Constants
 import com.yeferic.holaflymarvel.data.sources.remote.CharacterApi
+import com.yeferic.holaflymarvel.data.sources.remote.ComicApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,7 +45,6 @@ class NetworkModule {
                     chain.request().newBuilder()
                         .url(url)
                         .build()
-                println(url)
                 chain.proceed(request)
             }
 
@@ -70,5 +70,11 @@ class NetworkModule {
     @Singleton
     fun providesCharacterApi(retrofit: Retrofit): CharacterApi {
         return retrofit.create(CharacterApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesComicsApi(retrofit: Retrofit): ComicApi {
+        return retrofit.create(ComicApi::class.java)
     }
 }

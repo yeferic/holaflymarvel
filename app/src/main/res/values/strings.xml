@@ -7,4 +7,8 @@
     <!-- Menu Screen -->
     <string name="menu.screen.retry_button">Intentar nuevamente</string>
     <string name="menu.screen.image_description">Imagen</string>
+
+    <!-- Comics Screen -->
+    <string name="comics.screen.retry_button">Intentar nuevamente</string>
+    <string name="comics.screen.image_description">Imagen</string>
 </resources>
