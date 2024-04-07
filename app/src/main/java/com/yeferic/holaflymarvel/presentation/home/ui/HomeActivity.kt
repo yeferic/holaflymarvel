@@ -16,8 +16,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.yeferic.holaflymarvel.core.commons.Routes
 import com.yeferic.holaflymarvel.core.commons.Routes.Companion.COMIC_SCREEN_PARAMETER
+import com.yeferic.holaflymarvel.core.commons.Routes.Companion.DETAIL_SCREEN_PARAMETER
 import com.yeferic.holaflymarvel.core.ui.theme.HolaflyMarvelTheme
 import com.yeferic.holaflymarvel.presentation.comiclist.ui.ComicsListScreen
+import com.yeferic.holaflymarvel.presentation.comiclist.ui.ComicsListScreenParameters
+import com.yeferic.holaflymarvel.presentation.detail.ui.DetailScreen
 import com.yeferic.holaflymarvel.presentation.home.ui.screens.HomeScreen
 import com.yeferic.holaflymarvel.presentation.home.ui.screens.HomeScreenParams
 import com.yeferic.holaflymarvel.presentation.menu.ui.MenuScreen
@@ -72,7 +75,33 @@ class HomeActivity : ComponentActivity() {
                         ) {
                             val idCharacter =
                                 it.arguments?.getLong(COMIC_SCREEN_PARAMETER) ?: 0
-                            ComicsListScreen(idCharacter = idCharacter)
+                            ComicsListScreen(
+                                params =
+                                    ComicsListScreenParameters(
+                                        idCharacter = idCharacter,
+                                        goToDetailScreen = { id ->
+                                            navigationController.navigate(
+                                                Routes.DetailScreen.getRouteParameter(id),
+                                            )
+                                        },
+                                    ),
+                            )
+                        }
+
+                        composable(
+                            Routes.DetailScreen.route,
+                            arguments =
+                                listOf(
+                                    navArgument(
+                                        DETAIL_SCREEN_PARAMETER,
+                                    ) {
+                                        type = NavType.LongType
+                                    },
+                                ),
+                        ) {
+                            val idComic =
+                                it.arguments?.getLong(DETAIL_SCREEN_PARAMETER) ?: 0
+                            DetailScreen(idComic = idComic)
                         }
                     }
                 }

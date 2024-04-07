@@ -9,9 +9,12 @@ sealed class Routes(var route: String) {
         fun getRouteParameter(idCharacter: Long): String = "ComicsScreen/$idCharacter"
     }
 
-    data object DetailScreen : Routes("DetailScreen")
+    data object DetailScreen : Routes("DetailScreen/{$DETAIL_SCREEN_PARAMETER}") {
+        fun getRouteParameter(idComic: Long): String = "DetailScreen/$idComic"
+    }
 
     companion object {
         const val COMIC_SCREEN_PARAMETER = "idCharacter"
+        const val DETAIL_SCREEN_PARAMETER = "idComic"
     }
 }

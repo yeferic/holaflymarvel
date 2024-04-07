@@ -11,4 +11,8 @@
     <!-- Comics Screen -->
     <string name="comics.screen.retry_button">Intentar nuevamente</string>
     <string name="comics.screen.image_description">Imagen</string>
+
+    <!-- Detail Screen -->
+    <string name="detail.screen.retry_button">Intentar nuevamente</string>
+    <string name="detail.screen.image_description">Imagen</string>
 </resources>

@@ -4,9 +4,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.yeferic.holaflymarvel.data.sources.remote.ComicApi
 import com.yeferic.holaflymarvel.data.sources.remote.dto.BaseResponseDto
+import com.yeferic.holaflymarvel.data.sources.remote.dto.ComicDetailDto
 import com.yeferic.holaflymarvel.data.sources.remote.dto.ComicDto
 import com.yeferic.holaflymarvel.data.sources.remote.dto.mapToDomain
 import com.yeferic.holaflymarvel.domain.models.Comic
+import com.yeferic.holaflymarvel.domain.models.ComicDetail
 import com.yeferic.holaflymarvel.domain.repositories.ComicsRepository
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -37,5 +39,16 @@ class ComicsRepositoryImpl
             offset: Int,
         ): List<Comic> {
             return mapResponse(api.getComics(id = id, limit = limit, offset = offset))
+        }
+
+        override suspend fun getComicDetail(id: Long): ComicDetail {
+            gson.run {
+                return withContext(Dispatchers.IO) {
+                    fromJson(
+                        api.getComicDetail(id).body()!!.data.results[0],
+                        ComicDetailDto::class.java,
+                    ).mapToDomain()
+                }
+            }
         }
     }
