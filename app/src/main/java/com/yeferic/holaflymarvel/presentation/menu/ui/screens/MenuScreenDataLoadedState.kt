@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +31,11 @@ data class MenuScreenDataLoadedParams(
     val goToComicsView: (Long) -> Unit,
 )
 
+enum class MenuScreenDataLoadedStateTags {
+    LAZY_LIST,
+    ITEM_LIST,
+}
+
 @Composable
 fun MenuScreenDataLoadedState(params: MenuScreenDataLoadedParams) {
     Column(
@@ -39,6 +45,7 @@ fun MenuScreenDataLoadedState(params: MenuScreenDataLoadedParams) {
                 .padding(16.dp),
     ) {
         LazyVerticalGrid(
+            modifier = Modifier.testTag(MenuScreenDataLoadedStateTags.LAZY_LIST.name),
             columns = GridCells.Fixed(2),
         ) {
             items(params.characters) { item ->
@@ -63,7 +70,7 @@ fun CardItem(
             ),
         modifier =
             Modifier.defaultMinSize(minHeight = 80.dp)
-                .padding(4.dp)
+                .padding(4.dp).testTag(MenuScreenDataLoadedStateTags.ITEM_LIST.name)
                 .clickable(enabled = true) { onClickListener.invoke() },
     ) {
         AsyncImage(

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,13 @@ import com.yeferic.holaflymarvel.R
 import com.yeferic.holaflymarvel.core.ui.theme.DarkHolo
 import com.yeferic.holaflymarvel.domain.models.ComicDetail
 
+enum class DetailScreenDataLoadedStateTags {
+    LAZY_LIST,
+    ITEM_IMAGE,
+    ITEM_TITLE,
+    ITEM_DESCRIPTION,
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailScreenDataLoadedState(detail: ComicDetail) {
@@ -31,20 +39,23 @@ fun DetailScreenDataLoadedState(detail: ComicDetail) {
         Modifier
             .background(Color.White)
             .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .testTag(DetailScreenDataLoadedStateTags.LAZY_LIST.name),
     ) {
         item {
             GetImageComponent(
                 modifier =
                     Modifier
                         .fillParentMaxWidth()
-                        .animateItemPlacement(),
+                        .animateItemPlacement().testTag(
+                            DetailScreenDataLoadedStateTags.ITEM_IMAGE.name,
+                        ),
                 imageUrl = detail.imageUrl,
             )
 
             Text(
                 text = detail.title,
-                modifier = Modifier,
+                modifier = Modifier.testTag(DetailScreenDataLoadedStateTags.ITEM_TITLE.name),
                 color = Color.Black,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Normal,
@@ -52,7 +63,10 @@ fun DetailScreenDataLoadedState(detail: ComicDetail) {
 
             Text(
                 text = detail.description,
-                modifier = Modifier.padding(top = 8.dp),
+                modifier =
+                    Modifier.padding(
+                        top = 8.dp,
+                    ).testTag(DetailScreenDataLoadedStateTags.ITEM_DESCRIPTION.name),
                 color = DarkHolo,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Light,

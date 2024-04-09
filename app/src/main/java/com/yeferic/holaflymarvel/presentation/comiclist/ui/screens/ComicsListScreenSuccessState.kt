@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.yeferic.holaflymarvel.R
@@ -33,6 +34,12 @@ data class ComicsListScreenSuccessStateParams(
     val loadingMoreFunction: () -> Unit,
     val goToComicDetailScreen: (Long) -> Unit,
 )
+
+enum class ComicsListScreenSuccessStateTags {
+    LAZY_LIST,
+    ITEM_LIST,
+    MORE,
+}
 
 @Composable
 fun ComicsListScreenSuccessState(params: ComicsListScreenSuccessStateParams) {
@@ -56,7 +63,7 @@ fun ComicsListScreenSuccessState(params: ComicsListScreenSuccessStateParams) {
                         contentScale = ContentScale.Crop,
                         contentDescription = null,
                         modifier =
-                            Modifier
+                            Modifier.testTag(ComicsListScreenSuccessStateTags.ITEM_LIST.name)
                                 .clickable(
                                     enabled = true,
                                 ) {
@@ -65,7 +72,13 @@ fun ComicsListScreenSuccessState(params: ComicsListScreenSuccessStateParams) {
                     )
                 }
             },
-            modifier = Modifier.fillMaxWidth().weight(1f),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .weight(
+                        1f,
+                    )
+                    .testTag(ComicsListScreenSuccessStateTags.LAZY_LIST.name),
         )
 
         if (params.isLoadingMore) {
@@ -74,7 +87,8 @@ fun ComicsListScreenSuccessState(params: ComicsListScreenSuccessStateParams) {
                     Modifier
                         .fillMaxWidth()
                         .background(Color.White)
-                        .height(16.dp),
+                        .height(16.dp)
+                        .testTag(ComicsListScreenSuccessStateTags.MORE.name),
                 ) {
                     LottieAnimationWidget(
                         modifier = Modifier.align(Alignment.Center),

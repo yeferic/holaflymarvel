@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yeferic.holaflymarvel.R
@@ -18,6 +19,12 @@ import com.yeferic.holaflymarvel.core.ui.widgets.LottieAnimationWidget
 data class HomeScreenParams(
     val navigateToMenuScreen: () -> Unit,
 )
+
+enum class HomeScreenTags {
+    LOTTIE_IMAGE,
+    BUTTON,
+    TEXT_BUTTON,
+}
 
 @Composable
 fun HomeScreen(params: HomeScreenParams) {
@@ -28,10 +35,16 @@ fun HomeScreen(params: HomeScreenParams) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box {
-                LottieAnimationWidget(modifier = Modifier.size(128.dp), id = R.raw.home_icon)
+                LottieAnimationWidget(
+                    modifier = Modifier.size(128.dp).testTag(HomeScreenTags.LOTTIE_IMAGE.name),
+                    id = R.raw.home_icon,
+                )
             }
-            Button(onClick = { params.navigateToMenuScreen.invoke() }) {
+            Button(modifier = Modifier.testTag(HomeScreenTags.BUTTON.name), onClick = {
+                params.navigateToMenuScreen.invoke()
+            }) {
                 Text(
+                    modifier = Modifier.testTag(HomeScreenTags.TEXT_BUTTON.name),
                     text = stringResource(id = R.string.home_screen_button_text),
                 )
             }
