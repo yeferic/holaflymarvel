@@ -1,10 +1,10 @@
 package com.yeferic.holaflymarvel.presentation.comiclist.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeferic.holaflymarvel.core.commons.UseCaseStatus
 import com.yeferic.holaflymarvel.domain.usecases.comics.GetComicsUseCase
-import com.yeferic.holaflymarvel.domain.usecases.comics.GetComicsUseCase.Companion.MAX_LIMIT
 import com.yeferic.holaflymarvel.presentation.comiclist.states.ComicsListUiState
 import com.yeferic.holaflymarvel.presentation.comiclist.states.ComicsListUiState.Error
 import com.yeferic.holaflymarvel.presentation.comiclist.states.ComicsListUiState.Loading
@@ -26,7 +26,7 @@ class ComicsViewModel
         val uiState: StateFlow<ComicsListUiState> = _uiState
 
         private var idCharacter: Long = 0
-        private var currentOffset: Int = MAX_LIMIT
+        private var currentOffset: Int = 0
 
         fun setIdCharacter(id: Long) {
             idCharacter = id
@@ -68,7 +68,8 @@ class ComicsViewModel
             }
         }
 
-        private fun setUiState(state: ComicsListUiState) {
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        fun setUiState(state: ComicsListUiState) {
             _uiState.value = state
         }
     }

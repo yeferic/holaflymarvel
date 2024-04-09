@@ -28,7 +28,7 @@ sealed class CharacterApiError : ErrorEntity() {
     data class ServiceError(override val message: String) : CharacterApiError()
 }
 
-private enum class CharacterErrorMessage(val message: String) {
+enum class CharacterErrorMessage(val message: String) {
     HTTP_EXCEPTION("No fue posible obtener información. Por favor intenta nuevamente"),
     GENERAL_EXCEPTION("No fue posible obtener información. Por favor intenta nuevamente"),
 }

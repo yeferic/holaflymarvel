@@ -1,5 +1,6 @@
 package com.yeferic.holaflymarvel.data.repositories
 
+import androidx.annotation.VisibleForTesting
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.yeferic.holaflymarvel.data.sources.remote.ComicApi
@@ -21,7 +22,8 @@ class ComicsRepositoryImpl
         private val api: ComicApi,
         private val gson: Gson,
     ) : ComicsRepository {
-        private suspend fun mapResponse(response: Response<BaseResponseDto>): List<Comic> {
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        suspend fun mapResponse(response: Response<BaseResponseDto>): List<Comic> {
             gson.run {
                 return withContext(Dispatchers.IO) {
                     val listType = object : TypeToken<List<ComicDto>>() {}.type
@@ -45,7 +47,7 @@ class ComicsRepositoryImpl
             gson.run {
                 return withContext(Dispatchers.IO) {
                     fromJson(
-                        api.getComicDetail(id).body()!!.data.results[0],
+                        api.getComicDetail(id).body()!!.data.results.first(),
                         ComicDetailDto::class.java,
                     ).mapToDomain()
                 }

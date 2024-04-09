@@ -29,7 +29,7 @@ class GetComicsUseCase
                         repository.getComics(
                             id = id,
                             limit = MAX_LIMIT,
-                            offset = currentOffset + MAX_LIMIT,
+                            offset = currentOffset,
                         )
                     emit(UseCaseStatus.Success(comics))
                 } catch (e: Exception) {
