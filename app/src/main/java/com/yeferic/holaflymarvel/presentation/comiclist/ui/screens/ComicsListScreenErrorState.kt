@@ -1,6 +1,7 @@
 package com.yeferic.holaflymarvel.presentation.comiclist.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -25,6 +27,12 @@ data class ComicsListScreenErrorStateParams(
     val retryFunction: () -> Unit,
 )
 
+enum class ComicsListScreenErrorStateTags {
+    LOTTIE_IMAGE,
+    TEXT_ERROR,
+    BUTTON_RETRY,
+}
+
 @Composable
 fun ComicsListScreenErrorState(params: ComicsListScreenErrorStateParams) {
     with(params) {
@@ -35,18 +43,30 @@ fun ComicsListScreenErrorState(params: ComicsListScreenErrorStateParams) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            LottieAnimationWidget(
-                modifier = Modifier.size(72.dp),
-                id = R.raw.error,
-            )
+            Box(modifier = Modifier.testTag(ComicsListScreenErrorStateTags.LOTTIE_IMAGE.name)) {
+                LottieAnimationWidget(
+                    modifier = Modifier.size(72.dp),
+                    id = R.raw.error,
+                )
+            }
+
             Text(
+                modifier = Modifier.testTag(ComicsListScreenErrorStateTags.TEXT_ERROR.name),
                 text = error,
                 fontWeight = FontWeight.Light,
                 color = DarkHolo,
                 textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = { retryFunction.invoke() }) {
+            Button(
+                modifier =
+                    Modifier.testTag(
+                        ComicsListScreenErrorStateTags.BUTTON_RETRY.name,
+                    ),
+                onClick = {
+                    retryFunction.invoke()
+                },
+            ) {
                 Text(
                     text = stringResource(id = R.string.menu_screen_retry_button),
                 )
