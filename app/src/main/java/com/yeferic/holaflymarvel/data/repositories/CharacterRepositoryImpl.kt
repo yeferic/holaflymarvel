@@ -1,5 +1,6 @@
 package com.yeferic.holaflymarvel.data.repositories
 
+import androidx.annotation.VisibleForTesting
 import com.google.gson.Gson
 import com.yeferic.holaflymarvel.data.sources.local.dao.CharacterDao
 import com.yeferic.holaflymarvel.data.sources.remote.CharacterApi
@@ -20,36 +21,41 @@ class CharacterRepositoryImpl
         private val characterDao: CharacterDao,
         private val gson: Gson,
     ) : CharacterRepository {
-        private suspend fun mapResponse(response: Response<BaseResponseDto>): Character {
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        suspend fun mapResponse(response: Response<BaseResponseDto>): Character {
             gson.run {
                 return withContext(Dispatchers.IO) {
                     fromJson(
-                        response.body()!!.data.results[0],
+                        response.body()!!.data.results.first(),
                         CharacterDto::class.java,
                     ).mapToDomain()
                 }
             }
         }
 
-        private suspend fun getIronManInfo(): Character {
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        suspend fun getIronManInfo(): Character {
             return mapResponse(api.getIronManInfo()).also {
                 characterDao.insert(it)
             }
         }
 
-        private suspend fun getThorInfo(): Character {
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        suspend fun getThorInfo(): Character {
             return mapResponse(api.getThorInfo()).also {
                 characterDao.insert(it)
             }
         }
 
-        private suspend fun getHulkInfo(): Character {
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        suspend fun getHulkInfo(): Character {
             return mapResponse(api.getHulkInfo()).also {
                 characterDao.insert(it)
             }
         }
 
-        private suspend fun getCaptainAmericaInfo(): Character {
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        suspend fun getCaptainAmericaInfo(): Character {
             return mapResponse(api.getCaptainAmericaInfo()).also {
                 characterDao.insert(it)
             }

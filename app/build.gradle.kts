@@ -37,7 +37,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     buildFeatures {
         compose = true
@@ -87,4 +87,8 @@ dependencies {
     testImplementation(libs.coroutine.test)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+    testImplementation(libs.bundles.mockk)
+    testImplementation(libs.bundles.mockk)
+    testImplementation(libs.bundles.mockito)
+    testImplementation(libs.kotlin.reflect)
 }

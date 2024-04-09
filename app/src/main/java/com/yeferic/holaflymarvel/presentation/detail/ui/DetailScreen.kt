@@ -51,7 +51,7 @@ fun DetailScreen(
     }
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.setIdCharacter(idComic)
+        viewModel.setIdComic(idComic)
         viewModel.getComicInfo()
     }
 }

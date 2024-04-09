@@ -1,5 +1,6 @@
 package com.yeferic.holaflymarvel.presentation.menu.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeferic.holaflymarvel.core.commons.UseCaseStatus
@@ -42,7 +43,8 @@ class MenuViewModel
             }
         }
 
-        private fun setUiState(state: MenuUiStates) {
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        fun setUiState(state: MenuUiStates) {
             _uiState.value = state
         }
     }

@@ -1,5 +1,6 @@
 package com.yeferic.holaflymarvel.presentation.detail.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeferic.holaflymarvel.core.commons.UseCaseStatus
@@ -26,7 +27,7 @@ class DetailViewModel
 
         private var idComic: Long = 0
 
-        fun setIdCharacter(id: Long) {
+        fun setIdComic(id: Long) {
             idComic = id
         }
 
@@ -44,7 +45,8 @@ class DetailViewModel
             }
         }
 
-        private fun setUiState(state: ComicDetailUiState) {
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        fun setUiState(state: ComicDetailUiState) {
             _uiState.value = state
         }
     }
