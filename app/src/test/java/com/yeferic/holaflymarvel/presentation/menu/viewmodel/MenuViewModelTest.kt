@@ -89,6 +89,7 @@ class MenuViewModelTest {
             coVerify {
                 charactersUseCaseMock()
             }
+            println(uiState.value)
             Assert.assertEquals(uiState.value, MenuUiStates.DataLoaded(listResponse))
         }
 
